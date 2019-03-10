@@ -1,0 +1,94 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+header {
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 25px 0px;
+  text-align: center;
+  background-color: #e5e5e5;
+}
+
+header > button.sky-button-big {
+  position: absolute;
+  top: 14.5px;
+  right: 50px;
+}
+
+table, th, td {
+  border-bottom-color: black;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+th, td {
+  padding: 15px 30px;
+}
+
+th {
+  font-weight: bolder;
+}
+
+main {
+  left: 0;
+  right: 0;
+  font-size: 2em;
+}
+
+table {
+  margin: auto;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 20;
+  visibility: hidden;
+}
+
+#popup {
+  position: absolute;
+  top: 200px;
+  left: calc(calc(100vw - 700px) / 2);
+  z-index: 40;
+  width: 650px;
+  background: white;
+  border-style: solid;
+  border-color: #e5e5e5;
+  border-width: 0.5px;
+  border-radius: 8px;
+  padding: 15px 25px;
+}
+
+#popup h1 {
+  margin-bottom: 20px;
+}
+
+#popup label {
+  display: block;
+}
+
+#popup input {
+  display: block;
+  padding: 5px 8px;
+  font-size: 1.2em;
+}
+
+#popup button.sky-button-big {
+  margin-right: 10px;
+}
+
+#popup button.sky-button-big.right {
+  position: absolute;
+  bottom: 15px;
+  right: 25px;
+}
