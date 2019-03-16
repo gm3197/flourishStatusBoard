@@ -81,7 +81,7 @@ ws.createServer(function(connection) {
       } else if (data.job == "updateBoardFields") {
         updateBoardFields(data)
       }
-    } catch {
+    } catch(err) {
       sendDataToConnection(connection, {"error":"invalid request"})
     }
   })
