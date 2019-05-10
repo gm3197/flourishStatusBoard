@@ -6,6 +6,9 @@ ws.onopen = function() {
   sendDataToServer({
     "job": "subscribe"
   })
+  if (getQueryStrings().hideButtons) {
+    document.getElementById('addButton').remove()
+  }
 };
 
 ws.onmessage = function(evt) {
@@ -33,13 +36,23 @@ function sendDataToServer(data) {
 function setTableData(data) {
   let headers = "<tr>"
   for (var i = 0; i < data.fields.length; i++) {
-    headers += `<th style="cursor:pointer;" onclick="showFieldEdit('${data.fields[i].name}')">${data.fields[i].displayName}</th>`
+    if (!getQueryStrings().hideButtons) {
+      headers += `<th style="cursor:pointer;" onclick="showFieldEdit('${data.fields[i].name}')">${data.fields[i].displayName}</th>`
+    } else {
+      headers += `<th>${data.fields[i].displayName}</th>`
+    }
   }
-  headers += `<th><button class="sky-button-big" onclick="showFieldAdd()">New Column</button></th></tr>`
+  if (!getQueryStrings().hideButtons) {
+    headers += `<th><button class="sky-button-big" onclick="showFieldAdd()">New Column</button></th></tr>`
+  }
 
   let rows = ""
   for (var i = 0; i < data.entries.length; i++) {
-    rows += `<tr style="cursor:pointer;" onclick="showEdit('${data.entries[i].id}')">`
+    if (!getQueryStrings().hideButtons) {
+      rows += `<tr style="cursor:pointer;" onclick="showEdit('${data.entries[i].id}')">`
+    } else {
+      rows += `<tr>`
+    }
     for (var j = 0; j < data.fields.length; j++) {
       rows += `<td>${data.entries[i][data.fields[j].name] || ""}</td>`
     }
@@ -185,4 +198,12 @@ function showPopup(html) {
 
 function hidePopup() {
   document.getElementById('overlay').style = "visibility:hidden;"
+}
+
+function getQueryStrings() {
+  let dict = {}
+  for (var i = 0; i < window.location.search.substring(1).split("&").length; i++) {
+    dict[window.location.search.substring(1).split("&")[i]] = true
+  }
+  return dict;
 }
