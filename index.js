@@ -1,6 +1,7 @@
 var ws = require("nodejs-websocket")
 var fs = require("fs")
 var http = require("http"),
+    https = require("https")
     url = require("url"),
     path = require("path")
 
@@ -32,7 +33,10 @@ function saveBoardData() {
 /*
  * Create http server and configure handler function. Then listen on port 80
  */
-http.createServer(function(req, res) {
+let server = https.createServer({
+  key: fs.readFileSync('./ssl/key.pem'),
+  cert: fs.readFileSync('./ssl/cert.pem')
+}, function(req, res) {
   var uri = url.parse(req.url).pathname
   switch (uri) {
     case "/":
@@ -57,12 +61,16 @@ http.createServer(function(req, res) {
   }
 }).on("error", function(err) {
   console.log("HTTP Server threw an error: " + err)
-}).listen(80)
+}).listen(443)
 
 /*
  * Create websocket server and configure handler function. Then listen on port 8000
  */
-ws.createServer(function(connection) {
+ws.createServer({
+  secure: true,
+  key: fs.readFileSync('./ssl/key.pem'),
+  cert: fs.readFileSync('./ssl/cert.pem')
+},function(connection) {
   connection.on("text", function(str) {
     try {
       var data = JSON.parse(str)
